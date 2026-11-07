@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: NotchHub
+Source: https://github.com/ErDanieh/NotchHub
+
+Files: *
+Copyright: NotchHub contributors
+License: All rights reserved
+ See https://github.com/ErDanieh/NotchHub for the terms under which this software is offered.

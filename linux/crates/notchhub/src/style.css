@@ -1,0 +1,56 @@
+window.notchhub { background: transparent; }
+.notch { background: transparent; color: #ffffff; }
+.notch.collapsed { border-radius: 0 0 9px 9px; }
+.notch.expanded { border-radius: 0 0 24px 24px; }
+.tabbar { padding: 8px 14px 4px 14px; }
+.tabbar button { background: transparent; color: #aeaeb2; border-radius: 999px; padding: 2px 9px; min-height: 22px; min-width: 0; border: none; box-shadow: none; font-size: 11px; }
+.tabbar button:hover { background: #1c1c1e; }
+.tabbar button.active { background: #1473e6; color: #ffffff; }
+.page { padding: 6px 14px 14px 14px; }
+.muted { color: #aeaeb2; }
+.card { background: #1c1c1e; border-radius: 16px; }
+
+.ribbon { color: #ffffff; font-size: 12px; padding: 0 14px; }
+.title { font-weight: 700; font-size: 15px; }
+.subtitle { color: #aeaeb2; font-size: 12px; }
+.art { background: #1c1c1e; border-radius: 10px; }
+.ctl { background: transparent; border: none; box-shadow: none; color: #ffffff; padding: 2px 8px; min-width: 0; min-height: 0; border-radius: 999px; }
+.ctl:hover { background: #2c2c2e; }
+.ctl.on { color: #3DA9FF; }
+scale trough { min-height: 4px; background: #2c2c2e; border-radius: 2px; }
+scale highlight { background: #3DA9FF; border-radius: 2px; }
+scale slider { min-width: 10px; min-height: 10px; background: #ffffff; border-radius: 999px; border: none; box-shadow: none; margin: -4px; }
+.time { color: #aeaeb2; font-size: 11px; font-feature-settings: "tnum"; }
+.lyric { color: #6e6e73; font-size: 12px; }
+.lyric.now { color: #ffffff; font-size: 14px; font-weight: 700; }
+
+.row { background: #1c1c1e; border-radius: 10px; padding: 6px 10px; margin: 2px 0; }
+.row:hover { background: #2c2c2e; }
+.tile { padding: 4px; border-radius: 10px; }
+.tile:hover { background: #1c1c1e; }
+.tile label { font-size: 11px; }
+.chip { background: #1c1c1e; border-radius: 999px; padding: 1px 8px; font-size: 11px; color: #aeaeb2; }
+.stat { background: #1c1c1e; border-radius: 12px; padding: 8px 10px; }
+.stat .big { font-size: 16px; font-weight: 700; }
+.stat { padding: 5px 10px; }
+levelbar trough { min-height: 5px; background: #2c2c2e; border-radius: 3px; }
+levelbar block.filled { background: #3DA9FF; border-radius: 3px; }
+levelbar block.empty { background: transparent; }
+.running { color: #32d74b; }
+.stopped { color: #aeaeb2; }
+.danger { color: #ff6961; }
+list, listview, flowbox { background: transparent; }
+scrolledwindow { background: transparent; }
+
+.chipbtn { background: #1c1c1e; color: #aeaeb2; border-radius: 999px; padding: 1px 10px; font-size: 11px; min-height: 20px; }
+.chipbtn.active { background: #1473e6; color: #ffffff; }
+levelbar trough { border: none; }
+
+calendar.compact-cal { font-size: 10px; background: transparent; border: none; padding: 0; color: #ffffff; }
+calendar.compact-cal label, calendar.compact-cal header label { color: #ffffff; }
+calendar.compact-cal:indeterminate { color: #6e6e73; }
+calendar.compact-cal.view { background: transparent; }
+calendar.compact-cal header button { color: #ffffff; background: transparent; }
+calendar.compact-cal header { min-height: 22px; }
+calendar.compact-cal button { min-height: 16px; min-width: 16px; padding: 0; }
+calendar.compact-cal:selected { background: #1473e6; color: #ffffff; border-radius: 6px; }

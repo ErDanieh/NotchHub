@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NotchHub
+GenericName=Top edge hub
+Comment=Shelf, music with lyrics, clipboard, calendar, news and a pixel pet at the top of your screen
+Exec=notchhub
+Icon=notchhub
+Terminal=false
+Categories=Utility;
+Keywords=notch;shelf;music;lyrics;clipboard;calendar;news;
+StartupNotify=false

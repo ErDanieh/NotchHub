@@ -6,3 +6,8 @@
 /brag-output/
 # reference screenshots of the app that inspired this one are never shipped
 /replica/screens/
+
+# Linux port
+/linux/target/
+/linux/dist/
+/linux/shots/

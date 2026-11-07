@@ -1,0 +1,58 @@
+name: Linux
+
+on:
+  push:
+    paths: ["linux/**", ".github/workflows/linux.yml"]
+  pull_request:
+    paths: ["linux/**", ".github/workflows/linux.yml"]
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  deb:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-24.04, arch: amd64 }
+          - { os: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: linux
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential pkg-config \
+            libgtk-4-dev libglib2.0-dev libcairo2-dev libgdk-pixbuf-2.0-dev libpango1.0-dev \
+            libpulse-dev libpoppler-glib-dev libx11-dev ffmpeg
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: linux
+
+      - name: Tests
+        run: cargo test --workspace
+
+      - name: Build the .deb
+        run: |
+          cargo build --release -p notchhub
+          cargo install cargo-deb --locked
+          cargo deb -p notchhub --no-build
+          mkdir -p ../dist && cp target/debian/*.deb ../dist/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: notchhub-${{ matrix.arch }}-deb
+          path: dist/*.deb
+
+      - name: Attach to the release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ github.event.release.tag_name }}" ../dist/*.deb --clobber

@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+members = ["crates/notchhub-core", "crates/notchhub-mpris", "crates/notchhub"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["NotchHub contributors"]
+repository = "https://github.com/ErDanieh/NotchHub"
+
+[profile.release]
+lto = "thin"
+codegen-units = 4
+strip = true

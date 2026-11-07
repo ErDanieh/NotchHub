@@ -6,7 +6,8 @@
 
 ### Give your MacBook's notch a job.
 
-A tiny, always-on menu-bar app that turns the notch into a shelf, a music player, a clipboard, a calendar and more.<br>
+A tiny, always-on app that turns the notch into a shelf, a music player, a clipboard, a calendar and more.<br>
+**macOS** (native Swift) and **Linux** (Rust, `.deb`).<br>
 Hover it. Drop a file on it. A pixel pet lives next to it.
 
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-000?logo=apple&logoColor=white)
@@ -101,6 +102,81 @@ Inspired by NotchBox on the Mac App Store. This is an independent, from-scratch 
 
 ---
 
+## Linux (Ubuntu, Debian and friends)
+
+The same idea, rewritten from scratch in **Rust** with GTK4. There is no notch on a Linux laptop, so NotchHub hangs a
+small **pill under your top bar**. Hover it (or drop a file on it) and it opens.
+
+<p align="center">
+  <img src="docs/linux/music.png" width="48%" alt="Music with lyrics">
+  <img src="docs/linux/news.png" width="48%" alt="News by category">
+  <img src="docs/linux/shelf.png" width="48%" alt="Shelf">
+  <img src="docs/linux/calendar.png" width="48%" alt="Calendar">
+</p>
+
+### Install
+
+Download the `.deb` for your machine from the [Releases](../../releases) page (`amd64` for most PCs, `arm64` for
+Raspberry Pi and Asahi) and install it:
+
+```bash
+sudo apt install ./notchhub_*.deb
+notchhub
+```
+
+Or build it yourself (Rust and GTK4 development files needed):
+
+```bash
+sudo apt install build-essential pkg-config libgtk-4-dev libpulse-dev libpoppler-glib-dev libx11-dev ffmpeg
+cd linux
+cargo build --release
+cargo install cargo-deb && cargo deb -p notchhub --no-build   # optional: makes the .deb
+```
+
+NotchHub starts with your session if you turn on **Start NotchHub when I log in** in its settings.
+Open the settings from the tray icon, or just run `notchhub` again.
+
+### What is the same, what changes
+
+| | |
+|---|---|
+| **Shelf** | Drop files on the pill, drag them out again. Right click: open, show in folder, send to your phone with KDE Connect (if installed). Holding a file over a tab switches to it. |
+| **Music** | Anything that speaks MPRIS: Spotify, YouTube and YouTube Music in the browser, VLC, Rhythmbox... Progress bar you can drag, synced lyrics (also under the closed pill), song alert. |
+| **Halo** | Neon glow while music plays, or always. Colour, intensity, pulse speed, and an option to follow the beat of the system audio. |
+| **Clipboard** | History with pins. Entries marked secret by password managers are ignored. |
+| **Calendar** | Add an `.ics` file or the secret iCal address of your calendar (Google, Nextcloud, Outlook...). Month view, day agenda, heads-up before each event. |
+| **System** | CPU, memory, network, battery, disk, busiest apps, and alerts when something runs hot. |
+| **Convert** | Images, PDF to pictures, pictures to PDF, smaller PDF, audio and video (needs `ffmpeg`), and the **weight reducer**: say the size you want and it finds the best quality that fits. |
+| **News** | Categories you create, with the sources you choose. Paste a website and it finds the feed. Defaults can be deleted and restored. |
+| **Docker** | Start, stop and restart containers. Only shown when Docker is installed. |
+| **Pets** | Nine pixel pets that hang from the top bar, wander, sleep, peek out from under the pill and dance to music. |
+| **Other screens** | A small ball at the top of every other screen; hover it and the panel opens there. |
+| Camera mirror, AirDrop | Not in the Linux version. |
+
+### Good to know
+
+- **GNOME on Wayland:** GNOME does not let apps place their own windows, so NotchHub runs through XWayland
+  (it asks for X11 on its own). KDE, Xfce, Sway and X11 sessions work the same way.
+- **Tray icon:** GNOME needs the *AppIndicator* extension to show it (Ubuntu has it on). Without it, run `notchhub`
+  again to open the settings.
+- **Beat-synced halo** listens to the monitor of your default output through PulseAudio / PipeWire. Nothing is recorded.
+- Everything runs on your computer. No account, no telemetry. Lyrics come from [LRCLIB](https://lrclib.net) and news
+  from the feeds you pick.
+
+### Develop
+
+The Linux code lives in [`linux/`](linux): `notchhub-core` (logic, with tests), `notchhub-mpris` (now playing) and
+`notchhub` (the GTK app). A Docker image with every dependency, a virtual X server and a compositor lets you build and
+see it from any machine, including a Mac:
+
+```bash
+docker build -t notchhub-linux linux
+linux/dev.sh cargo test --workspace      # unit and integration tests
+linux/dev.sh cargo build -p notchhub
+```
+
+---
+
 <details>
 <summary><b>Leer en español</b></summary>
 
@@ -114,6 +190,6 @@ cd NotchHub
 ./Scripts/build-app.sh
 ```
 
-Se instala en `~/Applications` y se abre solo. Pasa el ratón por el notch para abrirlo. Para que arranque con el Mac: icono de la barra de menús, **Launch at login**.
+Se instala en `~/Applications` y se abre solo. En **Linux** hay una versión en Rust con paquete `.deb` (mira la sección Linux). Pasa el ratón por el notch para abrirlo. Para que arranque con el Mac: icono de la barra de menús, **Launch at login**.
 
 </details>
