@@ -1,0 +1,8 @@
+.DS_Store
+/.build/
+/build/
+*.xcodeproj
+# video project sources stay local (the rendered demo lives in docs/)
+/brag-output/
+# reference screenshots of the app that inspired this one are never shipped
+/replica/screens/

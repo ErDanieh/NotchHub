@@ -1,0 +1,29 @@
+feature,area,priority,original,clone,notes
+Notch-area overlay window always on top,shell,must,yes,partial,compiles and launches; not yet seen on screen
+Launch at login and menu bar icon,shell,must,yes,partial,menu bar icon + login toggle written; untested
+Open the drop zone when a drag nears the notch,shelf,must,yes,partial,global drag detection written; untested
+Drop files onto the shelf,shelf,must,yes,partial,written; untested
+Drag files out of the shelf into other apps,shelf,must,yes,partial,written; untested
+Remove items from the shelf,shelf,must,yes,partial,x on hover + Clear shelf menu; untested
+Share via AirDrop by dropping on target,shelf,must,yes,partial,written; untested
+Keep files across app restarts,shelf,must,unknown,partial,JSON store keeps items; untested
+Folders and multiple files at once,shelf,should,yes,no,
+Quick Look preview of an item,shelf,could,unknown,no,common in similar apps
+Haptic feedback,shell,could,yes,no,added v1.1.47
+Now playing: album art and controls,music,should,yes,yes,"Music, Spotify, YouTube in Chrome; progress bar and seek"
+Beat-synced animation,music,could,yes,no,
+Clipboard history,tools,should,yes,partial,"phase 2 built; text only, skips secret types; untested by user"
+Calendar day view and month view,tools,should,yes,partial,phase 3 built; needs permission prompts confirmed by user
+Pomodoro / countdown / stopwatch,tools,should,yes,no,
+Date and time display with custom colours,tools,should,yes,no,v1.1.64
+App shortcuts launcher,tools,should,yes,no,
+Quick notes,tools,should,yes,no,
+Mini browser with search engine choice,tools,could,yes,no,
+Network speed monitor,tools,could,yes,partial,"phase 2 built in the System tab (with CPU, memory, battery, disk, top processes)"
+Camera mirror,tools,could,yes,partial,phase 3 built; needs permission prompts confirmed by user
+Water tracker / counter / days-left / bookmarks,tools,could,yes,no,
+17 interface languages,i18n,could,yes,no,
+Pro in-app purchase and paywall,billing,skip,yes,skip,not needed for personal use
+Developer's Pro licence and branding,brand,skip,yes,skip,belongs to the original developer
+Third-party music partner integrations,music,skip,yes,skip,no private APIs or partner deals
+"File converter (images, PDF, audio/video)",tools,could,no,partial,"own addition; engine tested headless, UI untested"
