@@ -21,6 +21,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Clear shelf", action: #selector(clearShelf), keyEquivalent: "").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: "Reorder tabs…", action: #selector(openTabOrder), keyEquivalent: "").target = self
+        menu.addItem(withTitle: "News sources…", action: #selector(openNewsManager), keyEquivalent: "").target = self
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",").target = self
         loginItem = menu.addItem(withTitle: "Launch at login", action: #selector(toggleLogin), keyEquivalent: "")
         loginItem.target = self
@@ -45,6 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.center()
         settingsWindow?.makeKeyAndOrderFront(nil)
     }
+    @objc private func openNewsManager() { NewsManagerWindow.show() }
     private var tabOrderWindow: NSWindow?
     @objc private func openTabOrder() {
         if tabOrderWindow == nil {

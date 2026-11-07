@@ -52,7 +52,7 @@ Hover the notch (or the little ball on your other screens) and it opens. To star
 | **Mirror** | Your camera in the notch, resizable. The camera is only on while the tab is open. |
 | **System** | CPU, memory, network, battery, disk and the apps using the most. Alerts when something spikes. |
 | **Converter** | Images (JPG, PNG, HEIC...), PDF to images and back, audio and video. Plus an image **weight reducer**: type the size you want and it does the rest. |
-| **News** | Tech, AI and markets headlines in Spanish. |
+| **News** | Headlines in Spanish by category (Tecnología, IA, Bolsa). Create your own categories and add any website or RSS feed to each one from the gear in the tab. |
 | **Docker** | Start, stop and restart your containers. Only shows up if Docker is installed. |
 | **Pets** | A pixel pet walks along the menu bar, sleeps, peeks out from under the notch and dances when music plays. Nine to choose from. |
 | **Other screens** | A small ball on every screen without a notch. Hover it and the full panel opens there. |

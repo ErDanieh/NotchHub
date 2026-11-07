@@ -16,6 +16,9 @@ final class Settings: ObservableObject {
     @Published var petsEnabled: Bool { didSet { d.set(petsEnabled, forKey: "petsEnabled") } }
     @Published var petKind: String { didSet { d.set(petKind, forKey: "petKind") } }
     @Published var petSize: Int { didSet { d.set(petSize, forKey: "petSize") } }
+    /// News sources: the defaults (can be switched off) plus the ones the user added.
+    @Published var feeds: [Feed] { didSet { if let data = try? JSONEncoder().encode(feeds) { d.set(data, forKey: "newsFeeds") } } }
+    @Published var categories: [NewsCategory] { didSet { if let data = try? JSONEncoder().encode(categories) { d.set(data, forKey: "newsCategories") } } }
     @Published var haloBeat: Bool { didSet { d.set(haloBeat, forKey: "haloBeat") } }
     @Published var haloColorHex: String { didSet { d.set(haloColorHex, forKey: "haloColorHex") } }
     @Published var haloIntensity: Double { didSet { d.set(haloIntensity, forKey: "haloIntensity") } }
@@ -49,6 +52,20 @@ final class Settings: ObservableObject {
         petsEnabled = d.bool(forKey: "petsEnabled")
         petKind = d.string(forKey: "petKind") ?? "clawd"
         petSize = max(2, min(5, d.integer(forKey: "petSize")))
+        // News: the saved lists are the truth, so a default the user deleted stays deleted.
+        // Only defaults added by a newer version (never seen before) are appended.
+        let savedCats = d.data(forKey: "newsCategories").flatMap { try? JSONDecoder().decode([NewsCategory].self, from: $0) }
+        let savedFeeds = d.data(forKey: "newsFeeds").flatMap { try? JSONDecoder().decode([Feed].self, from: $0) }
+        let defaultIDs = defaultCategories.map(\.id) + defaultFeeds.map(\.url)
+        let seen = Set(d.stringArray(forKey: "newsSeenDefaults") ?? ((savedCats != nil || savedFeeds != nil) ? defaultIDs : []))
+        var cats = savedCats ?? defaultCategories
+        for c in defaultCategories where !seen.contains(c.id) && !cats.contains(where: { $0.id == c.id }) { cats.append(c) }
+        var fds = savedFeeds ?? defaultFeeds
+        for f in defaultFeeds where !seen.contains(f.url) && !fds.contains(where: { $0.url == f.url }) { fds.append(f) }
+        fds = fds.filter { f in cats.contains { $0.id == f.category } }
+        d.set(Array(seen.union(defaultIDs)), forKey: "newsSeenDefaults")
+        categories = cats
+        feeds = fds
         haloBeat = d.bool(forKey: "haloBeat")
         haloColorHex = d.string(forKey: "haloColorHex") ?? "3DA9FF"
         haloIntensity = d.double(forKey: "haloIntensity")
@@ -91,9 +108,20 @@ final class Settings: ObservableObject {
         return v.isEmpty ? [.shelf] : v
     }
 
+    /// Puts back the default categories and sources that were deleted. Everything the user added stays.
+    func restoreNewsDefaults() {
+        for c in defaultCategories where !categories.contains(where: { $0.id == c.id }) { categories.append(c) }
+        for f in defaultFeeds where !feeds.contains(where: { $0.url == f.url }) { feeds.append(f) }
+    }
+
+    func deleteCategory(_ id: String) {
+        feeds.removeAll { $0.category == id }
+        categories.removeAll { $0.id == id || $0.parent == id }
+    }
+
     func reset() {
         tabOrder = []; hiddenTabs = []
-        haloEnabled = true; petsEnabled = true; petKind = "clawd"; petSize = 3; haloAlways = false; ballsEnabled = true; haloBeat = false; haloColorHex = "3DA9FF"; haloIntensity = 1.0
+        haloEnabled = true; feeds = defaultFeeds; categories = defaultCategories; petsEnabled = true; petKind = "clawd"; petSize = 3; haloAlways = false; ballsEnabled = true; haloBeat = false; haloColorHex = "3DA9FF"; haloIntensity = 1.0
         pulseSeconds = 1.6; openDelay = 0.12; hideInFullscreen = false
         lyricsLead = 0.3; rememberTab = true; alertsSong = true; alertsCalendar = true; alertsConversion = true; calendarLeadMinutes = 10; alertsPerformance = true; cpuThreshold = 90; memThreshold = 90; batteryThreshold = 15
     }
@@ -106,6 +134,11 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section("News") {
+                Button("Manage categories and sources…") { NewsManagerWindow.show() }
+                Text("Create your own categories and choose the sources of each one. Also available from the gear in the News tab.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
             Section("Pet") {
                 Toggle("Show a pet that walks along the top of the screen", isOn: $settings.petsEnabled)
                 Picker("Pet", selection: $settings.petKind) {
